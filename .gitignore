@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+
+# Word Documents
+*.doc
+*.docx
+# Temporary Word Lock Files
+~$*.doc
+~$*.docx
