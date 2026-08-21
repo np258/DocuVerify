@@ -6,7 +6,7 @@ import compliance
 # Page Config
 st.set_page_config(page_title="DocuVerify | SpecGuard", layout="wide")
 
-st.title("🍷 DocuVerify: Vendor Spec & Compliance Copilot")
+st.title("DocuVerify: Vendor Spec & Compliance Copilot")
 st.caption(
     "Automated unstructured document extraction & compliance validation engine."
 )
