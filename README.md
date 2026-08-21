@@ -4,8 +4,10 @@ DocuVerify is a proof-of-concept (POC) application designed to automate unstruct
 
 The system uses a Human-in-the-Loop architecture, allowing automated document ingestion while requiring human verification before committing records to downstream enterprise systems.
 
-**Live Demo** 
-Access the interactive web application here: <a href="https://docuverify-6ounfmeylyhhazuf7rrdhw.streamlit.app/" target="_blank">Launch DocuVerify Web App</a>
+> **Live Demo Available**  
+> Access the interactive web dashboard here: **[Launch DocuVerify Web App](https://docuverify-6ounfmeylyhhazuf7rrdhw.streamlit.app/)**  
+> *(Note: Use Ctrl+Click or Cmd+Click to open in a new tab)*
+
 
 **Key Features:**
 
