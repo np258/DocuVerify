@@ -4,9 +4,9 @@ import streamlit as st
 import compliance
 
 # Page Config
-st.set_page_config(page_title="DocuVerify | ANBL SpecGuard", layout="wide")
+st.set_page_config(page_title="DocuVerify | SpecGuard", layout="wide")
 
-st.title("🍷 DocuVerify: ANBL Vendor Spec & Compliance Copilot")
+st.title("🍷 DocuVerify: Vendor Spec & Compliance Copilot")
 st.caption(
     "Automated unstructured document extraction & compliance validation engine."
 )
@@ -87,7 +87,7 @@ if target_file:
                     "ABV": abv_val,
                     "Volume": net_vol,
                     "Status": "Approved",
-                    "Target_System": "ANBL D365 / Dataverse Product Catalog",
+                    "Target_System": "D365 / Dataverse Product Catalog",
                 }
             )
 else:
