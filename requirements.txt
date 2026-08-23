@@ -2,3 +2,5 @@ streamlit
 pypdf 
 pandas
 reportlab
+pytesseract
+pdf2image
