@@ -1,15 +1,52 @@
 import re
+from pdf2image import convert_from_bytes
 import pypdf
+import pytesseract
+import os
 
+# Set executable paths for Windows local dev; Linux (Streamlit Cloud) uses system PATH automatically
+if os.name == "nt":  # "nt" means Windows
+    pytesseract.pytesseract.tesseract_cmd = (
+        r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    )
+    # Update to match your working local path
+    POPPLER_PATH = r"C:\Program Files\poppler\Library\bin"
+else:  # Linux / Streamlit Cloud
+    POPPLER_PATH = None
 
 def extract_text_from_pdf(pdf_file):
+    # 1. Store byte payload for potential OCR stream conversion
+    if isinstance(pdf_file, str):
+        with open(pdf_file, "rb") as f:
+            pdf_bytes = f.read()
+    else:
+        pdf_bytes = pdf_file.read()
+        pdf_file.seek(0)  # Reset pointer for pypdf reader
+
+    # 2. Try fast digital text extraction first
     reader = pypdf.PdfReader(pdf_file)
     text = ""
     for page in reader.pages:
         extracted = page.extract_text()
         if extracted:
             text += extracted + "\n"
+
+    # 3. Fallback to Tesseract OCR if PDF contains no digital text
+    if not text.strip():
+        try:
+            # Pass poppler_path if on Windows, otherwise let it default to system PATH on Linux
+            if POPPLER_PATH:
+                images = convert_from_bytes(pdf_bytes, poppler_path=POPPLER_PATH)
+            else:
+                images = convert_from_bytes(pdf_bytes)
+            text = ""
+            for img in images:
+                text += pytesseract.image_to_string(img) + "\n"
+        except Exception as e:
+            text = f"Extraction Error (OCR Failed): {str(e)}"
+
     return text
+
 
 def parse_spec_data(raw_text):
     data = {
@@ -40,6 +77,7 @@ def parse_spec_data(raw_text):
         data["french_label"] = french_match.group(1).strip()
 
     return data
+
 
 def check_compliance(parsed_data):
     checklist = []
