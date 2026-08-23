@@ -6,11 +6,45 @@ import compliance
 # Page Config
 st.set_page_config(page_title="DocuVerify | SpecGuard", layout="wide")
 
+# CSS targeted specifically at st.form_submit_button
+st.markdown(
+    """
+    <style>
+    /* Target the form submit button directly */
+    div[data-testid="stFormSubmitButton"] > button {
+        background-color: #0078D4 !important;
+        color: white !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        height: 3.2em !important;
+        border-radius: 8px !important;
+        border: none !important;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    div[data-testid="stFormSubmitButton"] > button:hover {
+        background-color: #005A9E !important;
+        color: white !important;
+    }
+    </style>
+""",
+    unsafe_allow_html=True,
+)
+
 st.title("DocuVerify: Vendor Spec & Compliance Copilot")
 st.caption(
     "Automated unstructured document extraction & compliance validation engine."
 )
 st.divider()
+
+st.info(
+    "**Vendor Spec Sheet Upload Guidelines:**\n"
+    "* **Supported Formats:** Digital PDFs & Scanned/Image-based PDFs (built-in OCR engine).\n"
+    "* **Required Field Labels:** For automated extraction to parse fields correctly, documents must include standard labels:\n"
+    "  - `Product Name:`\n"
+    "  - `Alcohol By Volume (ABV):`\n"
+    "  - `Net Volume:`\n"
+    "  - `French Label Text Included:`"
+)
 
 # Sidebar Ingestion Controls
 st.sidebar.header("Document Ingestion")
@@ -73,8 +107,10 @@ if target_file:
             df_compliance = pd.DataFrame(compliance_results)
             st.dataframe(df_compliance, use_container_width=True)
 
+            # Form submit button target
             submit_btn = st.form_submit_button(
-                "Approve & Export Record to Dataverse"
+                "Approve & Export Record to Dataverse",
+                use_container_width=True,
             )
 
         if submit_btn:
